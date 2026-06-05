@@ -1,17 +1,12 @@
 package com.neuprakash.HospitalMgmtSystem.dto;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class PatientDto {
-    private Long id;
+public class AddPatientDto {
     private String fullName;
     private String email;
     private String contactNumber;
