@@ -1,0 +1,31 @@
+package com.neuprakash.HospitalMgmtSystem.controller;
+
+import com.neuprakash.HospitalMgmtSystem.dto.PatientDto;
+import com.neuprakash.HospitalMgmtSystem.entity.Patient;
+import com.neuprakash.HospitalMgmtSystem.repository.PatientRepository;
+import com.neuprakash.HospitalMgmtSystem.service.PatientService;
+import com.neuprakash.HospitalMgmtSystem.service.impl.PatientServiceImpl;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
+public class PatientController {
+    @Autowired
+    private final PatientService patientService;
+
+
+
+
+    @GetMapping("/patient")
+    public List<PatientDto> getPatient() {
+        return patientService.getAllPatients();
+    }
+
+
+}
+
