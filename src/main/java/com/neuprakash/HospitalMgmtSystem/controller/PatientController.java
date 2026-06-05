@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,13 +35,28 @@ public class PatientController {
     @PostMapping("/create-patient")
     public ResponseEntity<PatientDto> createPatient(@RequestBody AddPatientDto addPatientDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(patientService.createPatient(addPatientDto));
-
-
-
-
     }
-}
 
+    @DeleteMapping("/patient/{id}")
+    public ResponseEntity<Void> deleteStudent(@PathVariable Long id){
+        patientService.deletePatientById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("patient/{id}")
+    public ResponseEntity<PatientDto> updatePatient(@PathVariable Long id,
+                                                    @RequestBody AddPatientDto addPatientDto){
+        return ResponseEntity.ok(patientService.updatePatient(id, addPatientDto));
+    }
+
+    @PatchMapping("patient/{id}")
+    public ResponseEntity<PatientDto> updatePatient(@PathVariable Long id,
+                                                    @RequestBody Map<String, Object> updates){
+        return ResponseEntity.ok(patientService.updatePartialPatient(id, updates));
+    }
+
+
+}
 
 
 

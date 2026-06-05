@@ -6,6 +6,7 @@ import com.neuprakash.HospitalMgmtSystem.dto.PatientDto;
 
 
 import java.util.List;
+import java.util.Map;
 
 public interface PatientService {
 
@@ -14,4 +15,10 @@ public interface PatientService {
     PatientDto getPatientById(Long id);
 
     PatientDto createPatient(AddPatientDto addPatientDto);
+
+    void deletePatientById( Long id);
+
+    PatientDto updatePatient(Long id, AddPatientDto addPatientDto);
+
+    PatientDto updatePartialPatient(Long id, Map<String, Object> updates);
 }

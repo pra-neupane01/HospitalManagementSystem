@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -40,12 +41,43 @@ public class PatientServiceImpl implements PatientService {
         Patient newPatient = modelMapper.map(addPatientDto, Patient.class);
         Patient patient = patientRepository.save(newPatient);
         return modelMapper.map(patient, PatientDto.class);
-
-
     }
 
+    @Override
+    public void deletePatientById(Long id) {
+        if(!patientRepository.existsById(id)){
+            throw new IllegalArgumentException("Student does not exists");
+        }
+        patientRepository.deleteById(id);
+    }
 
+    @Override
+    public PatientDto updatePatient(Long id, AddPatientDto addPatientDto) {
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow( ()-> new IllegalArgumentException("Patient Not found."));
+        modelMapper.map(addPatientDto, patient);
 
+        patientRepository.save(patient);
+        return modelMapper.map(patient, PatientDto.class);
+    }
+
+    @Override
+    public PatientDto updatePartialPatient(Long id, Map<String, Object> updates) {
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow( ()-> new IllegalArgumentException("Patient Not found."));
+        updates.forEach((String field, Object value) -> {
+            switch (field){
+                case "name":patient.setFullName((String) value);
+                break;
+                case "email":patient.setEmail((String) value);
+                break;
+                default:
+                    throw new IllegalArgumentException("Filed is not supported");
+            }
+        });
+        Patient savedPatient = patientRepository.save(patient);
+        return modelMapper.map(savedPatient, PatientDto.class);
+    }
 }
 
 
