@@ -6,6 +6,7 @@ import com.neuprakash.HospitalMgmtSystem.entity.Patient;
 import com.neuprakash.HospitalMgmtSystem.repository.PatientRepository;
 import com.neuprakash.HospitalMgmtSystem.service.PatientService;
 import com.neuprakash.HospitalMgmtSystem.service.impl.PatientServiceImpl;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class PatientController {
     }
 
     @PostMapping("/create-patient")
-    public ResponseEntity<PatientDto> createPatient(@RequestBody AddPatientDto addPatientDto){
+    public ResponseEntity<PatientDto> createPatient(@RequestBody @Valid AddPatientDto addPatientDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(patientService.createPatient(addPatientDto));
     }
 
